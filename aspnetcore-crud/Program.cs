@@ -21,6 +21,15 @@ namespace aspnetcore_crud
             builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
+            builder.Services.AddCors(options =>
+                {
+                    options.AddPolicy("CorsPolicy",
+                        builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+                }
+            );
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +38,8 @@ namespace aspnetcore_crud
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 
