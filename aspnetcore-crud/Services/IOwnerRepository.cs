@@ -9,5 +9,6 @@ namespace aspnetcore_crud.Services
         Task<Owner> GetOwnerWithDetails(int ownerId);
         void CreateOwner(Owner owner);
         void UpdateOwner(Owner dbowner, Owner owner);
+        void DeleteOwner(Owner owner);
     }
 }
