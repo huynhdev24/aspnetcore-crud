@@ -14,13 +14,13 @@ namespace aspnetcore_crud.Data
         {
             modelBuilder.Entity<Account>().HasData(
                 new Account { Id = 1, DateCreated = new DateTime(2003, 12, 15), AccountType = "Domestic", OwnerId = 1},
-                new Account { Id = 1, DateCreated = new DateTime(1996, 2, 15), AccountType = "Domestic", OwnerId = 2 },
-                new Account { Id = 1, DateCreated = new DateTime(1999, 5, 4), AccountType = "Domestic", OwnerId = 3 },
-                new Account { Id = 1, DateCreated = new DateTime(1999, 12, 21), AccountType = "Savings", OwnerId = 3 },
-                new Account { Id = 1, DateCreated = new DateTime(2010, 5, 28), AccountType = "Domestic", OwnerId = 4 },
-                new Account { Id = 1, DateCreated = new DateTime(1999, 5, 12), AccountType = "Foreign", OwnerId = 3 },
-                new Account { Id = 1, DateCreated = new DateTime(1996, 2, 16), AccountType = "Foreign", OwnerId = 2 },
-                new Account { Id = 1, DateCreated = new DateTime(2010, 6, 20), AccountType = "Foreign", OwnerId = 4 }
+                new Account { Id = 2, DateCreated = new DateTime(1996, 2, 15), AccountType = "Domestic", OwnerId = 2 },
+                new Account { Id = 3, DateCreated = new DateTime(1999, 5, 4), AccountType = "Domestic", OwnerId = 3 },
+                new Account { Id = 4, DateCreated = new DateTime(1999, 12, 21), AccountType = "Savings", OwnerId = 3 },
+                new Account { Id = 5, DateCreated = new DateTime(2010, 5, 28), AccountType = "Domestic", OwnerId = 4 },
+                new Account { Id = 6, DateCreated = new DateTime(1999, 5, 12), AccountType = "Foreign", OwnerId = 3 },
+                new Account { Id = 7, DateCreated = new DateTime(1996, 2, 16), AccountType = "Foreign", OwnerId = 2 },
+                new Account { Id = 8, DateCreated = new DateTime(2010, 6, 20), AccountType = "Foreign", OwnerId = 4 }
             );
 
             modelBuilder.Entity<Owner>().HasData(
