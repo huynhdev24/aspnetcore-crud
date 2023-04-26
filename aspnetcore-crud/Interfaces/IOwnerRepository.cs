@@ -1,8 +1,8 @@
 ﻿using aspnetcore_crud.Models;
 
-namespace aspnetcore_crud.Services
+namespace aspnetcore_crud.Interfaces
 {
-    public interface IOwnerRepository: IDisposable
+    public interface IOwnerRepository : IDisposable, IGenericRepository<Owner>
     {
         Task<IEnumerable<Owner>> GetOwners();
         Task<Owner> GetOwner(int ownerId);

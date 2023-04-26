@@ -1,6 +1,7 @@
 
 using aspnetcore_crud.Data;
-using aspnetcore_crud.Services;
+using aspnetcore_crud.Interfaces;
+using aspnetcore_crud.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace aspnetcore_crud

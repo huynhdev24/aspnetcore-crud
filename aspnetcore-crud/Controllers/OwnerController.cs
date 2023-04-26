@@ -1,6 +1,6 @@
 ﻿using aspnetcore_crud.Data;
+using aspnetcore_crud.Interfaces;
 using aspnetcore_crud.Models;
-using aspnetcore_crud.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

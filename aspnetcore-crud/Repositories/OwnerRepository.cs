@@ -1,15 +1,18 @@
 ﻿using aspnetcore_crud.Data;
+using aspnetcore_crud.Interfaces;
 using aspnetcore_crud.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace aspnetcore_crud.Services
+namespace aspnetcore_crud.Repositories
 {
-    public class OwnerRepository: IOwnerRepository, IDisposable
-    {
+    public class OwnerRepository: GenericRepository<Owner>, IOwnerRepository, IDisposable
+    {  
+        #region Implement
         private readonly DataContext _repositoryContext;
-        public OwnerRepository(DataContext repositoryContext)
+
+        public OwnerRepository(DataContext _repositoryContext): base(_repositoryContext)
         {
-            this._repositoryContext = repositoryContext;
+            this._repositoryContext = _repositoryContext;
         }
 
         public async Task<Owner?> GetOwner(int ownerId)
@@ -70,5 +73,7 @@ namespace aspnetcore_crud.Services
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion
+        
     }
 }
