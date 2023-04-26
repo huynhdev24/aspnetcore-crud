@@ -13,27 +13,32 @@ namespace aspnetcore_crud.Repositories
             this._repositoryContext = _repositoryContext;
             this.DbSet = this._repositoryContext.Set<T>();
         }
-        public virtual Task<bool> AddEntity(T entity)
+        public virtual void CreateEntity(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<bool> DeleteEntity(int id)
+        public virtual void UpdateEntity(T dbEntity, T entity)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<List<T>> GetAllAsync()
-        {
-            return this.DbSet.ToListAsync();
-        }
-
-        public virtual Task<T> GetAsync(int id)
+        public virtual void DeleteEntity(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<bool> UpdateEntity(T entity)
+        public virtual Task<IEnumerable<T>> GetEntities()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Task<T> GetEntity(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Task<T> GetEntityWithDetails(int id)
         {
             throw new NotImplementedException();
         }

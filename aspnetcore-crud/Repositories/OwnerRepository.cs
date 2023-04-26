@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 namespace aspnetcore_crud.Repositories
 {
     public class OwnerRepository: GenericRepository<Owner>, IOwnerRepository, IDisposable
-    {  
-        #region Implement
+    {
+        #region Implement IOwnerRepository
         private readonly DataContext _repositoryContext;
 
         public OwnerRepository(DataContext _repositoryContext): base(_repositoryContext)
@@ -74,6 +74,5 @@ namespace aspnetcore_crud.Repositories
             GC.SuppressFinalize(this);
         }
         #endregion
-        
     }
 }

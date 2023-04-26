@@ -4,7 +4,7 @@ namespace aspnetcore_crud.UnitOfWork
 {
     public interface IUnitofWork
     {
-        IOwnerRepository ownerrepo { get; }
+        IOwnerRepository Ownerrepo { get; }
 
         Task CompleteAsync();
     }
