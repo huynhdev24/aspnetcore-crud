@@ -8,37 +8,37 @@ namespace aspnetcore_crud.Repositories
     public class OwnerRepository: GenericRepository<Owner>, IOwnerRepository, IDisposable
     {
         #region Implement IOwnerRepository
-        private readonly DataContext _repositoryContext;
+        private new readonly DataContext _repositoryContext;
 
         public OwnerRepository(DataContext _repositoryContext): base(_repositoryContext)
         {
             this._repositoryContext = _repositoryContext;
         }
 
-        public async Task<Owner?> GetOwner(int ownerId)
+        public async Task<Owner?> GetEntity(int ownerId)
         {
             return await _repositoryContext.Owners.FindAsync(ownerId);
         }
 
-        public async Task<IEnumerable<Owner>> GetOwners()
+        public async Task<IEnumerable<Owner>> GetEntities()
         {
             return await _repositoryContext.Owners.ToListAsync();
         }
         
-        public async Task<Owner> GetOwnerWithDetails(int ownerId)
+        public async Task<Owner?> GetEntityWithDetails(int ownerId)
         {
             return await _repositoryContext.Owners
                 .Include(owner => owner.Accounts)
                 .FirstOrDefaultAsync(owner => owner.Id == ownerId);
         }
 
-        public void CreateOwner(Owner owner)
+        public void CreateEntity(Owner owner)
         {
             _repositoryContext.Owners.Add(owner);
             _repositoryContext.SaveChanges();
         }
 
-        public void UpdateOwner(Owner dbOwner, Owner owner)
+        public void UpdateEntity(Owner dbOwner, Owner owner)
         {
             dbOwner.Name = owner.Name;
             dbOwner.Address = owner.Address;
@@ -48,7 +48,7 @@ namespace aspnetcore_crud.Repositories
             _repositoryContext.SaveChanges();
         }
 
-        public void DeleteOwner(Owner owner)
+        public void DeleteEntity(Owner owner)
         {
             _repositoryContext.Owners.Remove(owner);
             _repositoryContext.SaveChanges();

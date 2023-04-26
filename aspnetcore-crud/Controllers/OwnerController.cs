@@ -1,6 +1,7 @@
 ﻿using aspnetcore_crud.Data;
 using aspnetcore_crud.Interfaces;
 using aspnetcore_crud.Models;
+using aspnetcore_crud.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,24 +11,24 @@ namespace aspnetcore_crud.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        private readonly IOwnerRepository _ownerRepository;
+        private readonly IUnitofWork unitofWork;    
 
-        public OwnerController(IOwnerRepository ownerRepository)
+        public OwnerController(IUnitofWork unitofWork)
         {
-            this._ownerRepository = ownerRepository;
+            this.unitofWork = unitofWork;
         }
 
         [HttpGet(Name = "GetOwners")]
         public async Task<IActionResult> GetOwners()
         {
-            var owners = await _ownerRepository.GetOwners();
+            var owners = await this.unitofWork.Ownerrepo.GetEntities();
             return Ok(owners);
         }
 
         [HttpGet("{id}", Name = "GetOwner")]
         public async Task<IActionResult> GetOwner(int id)
         {
-            var owner = await _ownerRepository.GetOwner(id);
+            var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
             if(owner == null)
             {
                 return NotFound();
@@ -38,7 +39,7 @@ namespace aspnetcore_crud.Controllers
         [HttpGet("{id}/account")]
         public async Task<ActionResult<Owner>> GetOwnerWithDetails(int id)
         {
-            var owner = await _ownerRepository.GetOwnerWithDetails(id);
+            var owner = await this.unitofWork.Ownerrepo.GetEntityWithDetails(id);
             if(owner == null)
             {
                 return NotFound();
@@ -50,30 +51,30 @@ namespace aspnetcore_crud.Controllers
         }
 
         [HttpPost(Name = "CreateOwner")]
-        public async Task<IActionResult> CreateOwner([FromBody] Owner owner)
+        public Task<IActionResult> CreateOwner([FromBody] Owner owner)
         {
             if(owner == null)
             {
-                return BadRequest("Owner object is null");    
+                return Task.FromResult<IActionResult>(BadRequest("Owner object is null"));    
             }
             if (!ModelState.IsValid)
             {
-                return BadRequest("Invalid model object");
+                return Task.FromResult<IActionResult>(BadRequest("Invalid model object"));
             }
 
-            _ownerRepository.CreateOwner(owner);
-            return CreatedAtRoute("GetOwner", new { id = owner.Id }, owner);
+            this.unitofWork.Ownerrepo.CreateEntity(owner);
+            return Task.FromResult<IActionResult>(CreatedAtRoute("GetOwner", new { id = owner.Id }, owner));
         }
 
         [HttpDelete("{id}", Name = "DeleteOwner")]
         public async Task<IActionResult> DeleteOwner(int id)
         {
-            var owner = await _ownerRepository.GetOwner(id);
+            var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
             if (owner == null)
             {
                 return NotFound();
             }
-            _ownerRepository.DeleteOwner(owner);
+            this.unitofWork.Ownerrepo.DeleteEntity(owner);
             return NoContent();
         }
 
@@ -88,12 +89,12 @@ namespace aspnetcore_crud.Controllers
             {
                 return BadRequest("Invalid model object");
             }
-            var ownerEntity = await _ownerRepository.GetOwner(id);
+            var ownerEntity = await this.unitofWork.Ownerrepo.GetEntity(id);
             if (ownerEntity == null)
             {
                 return NotFound();
             }
-            _ownerRepository.UpdateOwner(ownerEntity, owner);
+            this.unitofWork.Ownerrepo.UpdateEntity(ownerEntity, owner);
             return NoContent();
         }
     }

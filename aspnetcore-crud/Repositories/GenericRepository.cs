@@ -38,7 +38,7 @@ namespace aspnetcore_crud.Repositories
             throw new NotImplementedException();
         }
 
-        public virtual Task<T> GetEntityWithDetails(int id)
+        public virtual Task<T?> GetEntityWithDetails(int id)
         {
             throw new NotImplementedException();
         }

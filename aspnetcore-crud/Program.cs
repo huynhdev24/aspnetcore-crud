@@ -1,7 +1,6 @@
 
 using aspnetcore_crud.Data;
-using aspnetcore_crud.Interfaces;
-using aspnetcore_crud.Repositories;
+using aspnetcore_crud.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 namespace aspnetcore_crud
@@ -22,7 +21,7 @@ namespace aspnetcore_crud
             //SQL Server
             builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
-            builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+            builder.Services.AddScoped<IUnitofWork, UnitofWork>();
             builder.Services.AddCors(options =>
                 {
                     options.AddPolicy("CorsPolicy",
