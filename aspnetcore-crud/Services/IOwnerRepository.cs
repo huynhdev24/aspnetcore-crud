@@ -2,7 +2,7 @@
 
 namespace aspnetcore_crud.Services
 {
-    public interface IOwnerRepository
+    public interface IOwnerRepository: IDisposable
     {
         Task<IEnumerable<Owner>> GetOwners();
         Task<Owner> GetOwner(int ownerId);

@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace aspnetcore_crud.Services
 {
-    public class OwnerRepository: IOwnerRepository
+    public class OwnerRepository: IOwnerRepository, IDisposable
     {
         private readonly DataContext _repositoryContext;
         public OwnerRepository(DataContext repositoryContext)
         {
-            _repositoryContext = repositoryContext;
+            this._repositoryContext = repositoryContext;
         }
 
         public async Task<Owner?> GetOwner(int ownerId)
@@ -49,6 +49,26 @@ namespace aspnetcore_crud.Services
         {
             _repositoryContext.Owners.Remove(owner);
             _repositoryContext.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if(disposing)
+                {
+                    _repositoryContext.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

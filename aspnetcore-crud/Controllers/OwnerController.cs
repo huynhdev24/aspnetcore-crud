@@ -1,4 +1,5 @@
-﻿using aspnetcore_crud.Models;
+﻿using aspnetcore_crud.Data;
+using aspnetcore_crud.Models;
 using aspnetcore_crud.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace aspnetcore_crud.Controllers
 
         public OwnerController(IOwnerRepository ownerRepository)
         {
-            _ownerRepository = ownerRepository;
+            this._ownerRepository = ownerRepository;
         }
 
         [HttpGet(Name = "GetOwners")]
