@@ -35,7 +35,7 @@ namespace aspnetcore_crud.Repositories
         public void CreateEntity(Owner owner)
         {
             _repositoryContext.Owners.Add(owner);
-            _repositoryContext.SaveChanges();
+            _repositoryContext.SaveChangesAsync();
         }
 
         public void UpdateEntity(Owner dbOwner, Owner owner)
@@ -45,13 +45,13 @@ namespace aspnetcore_crud.Repositories
             dbOwner.DateOfBirth = owner.DateOfBirth;
 
             _repositoryContext.Owners.Update(dbOwner);
-            _repositoryContext.SaveChanges();
+            _repositoryContext.SaveChangesAsync();
         }
 
         public void DeleteEntity(Owner owner)
         {
             _repositoryContext.Owners.Remove(owner);
-            _repositoryContext.SaveChanges();
+            _repositoryContext.SaveChangesAsync();
         }
 
         private bool disposed = false;
