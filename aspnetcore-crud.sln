@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnetcore-crud", "aspnetcore-crud\aspnetcore-crud.csproj", "{49D9FD21-D398-4CE5-8844-8A15A9B8966C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetcore-crud", "aspnetcore-crud\aspnetcore-crud.csproj", "{49D9FD21-D398-4CE5-8844-8A15A9B8966C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetcore-crud-xunit-test", "aspnetcore-crud-xunit-test\aspnetcore-crud-xunit-test.csproj", "{8D7BC45F-1EE9-4F93-8904-C3882090750B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{49D9FD21-D398-4CE5-8844-8A15A9B8966C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49D9FD21-D398-4CE5-8844-8A15A9B8966C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49D9FD21-D398-4CE5-8844-8A15A9B8966C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D7BC45F-1EE9-4F93-8904-C3882090750B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D7BC45F-1EE9-4F93-8904-C3882090750B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D7BC45F-1EE9-4F93-8904-C3882090750B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D7BC45F-1EE9-4F93-8904-C3882090750B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
