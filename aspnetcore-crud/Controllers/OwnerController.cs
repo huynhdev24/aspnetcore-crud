@@ -11,16 +11,19 @@ namespace aspnetcore_crud.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        private readonly IUnitofWork unitofWork;    
+        private readonly IUnitofWork unitofWork;
+        private readonly ILogger _logger;
 
-        public OwnerController(IUnitofWork unitofWork)
+        public OwnerController(IUnitofWork unitofWork, ILoggerFactory logFactory)
         {
             this.unitofWork = unitofWork;
+            _logger = logFactory.CreateLogger<OwnerController>();
         }
 
         [HttpGet("owner")]
         public async Task<IActionResult> GetOwners()
         {
+            _logger.LogInformation("Log message in the GetOwners method");
             var owners = await this.unitofWork.Ownerrepo.GetEntities();
             return Ok(owners);
         }
@@ -28,6 +31,7 @@ namespace aspnetcore_crud.Controllers
         [HttpGet("owner/{id}")]
         public async Task<IActionResult> GetOwner(int id)
         {
+            _logger.LogInformation("Log message in the GetOwnerById method");
             var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
             if(owner == null)
             {
@@ -39,6 +43,7 @@ namespace aspnetcore_crud.Controllers
         [HttpGet("{id}/account")]
         public async Task<ActionResult<Owner>> GetOwnerWithDetails(int id)
         {
+            _logger.LogInformation("Log message in the GetOwnerWithDetailsById method");
             var owner = await this.unitofWork.Ownerrepo.GetEntityWithDetails(id);
             if(owner == null)
             {
@@ -53,7 +58,8 @@ namespace aspnetcore_crud.Controllers
         [HttpPost("owner")]
         public Task<IActionResult> CreateOwner([FromBody] Owner owner)
         {
-            if(owner == null)
+            _logger.LogInformation("Log message in the CreateOwner method");
+            if (owner == null)
             {
                 return Task.FromResult<IActionResult>(BadRequest("Owner object is null"));    
             }
@@ -69,6 +75,7 @@ namespace aspnetcore_crud.Controllers
         [HttpDelete("owner/{id}")]
         public async Task<IActionResult> DeleteOwner(int id)
         {
+            _logger.LogInformation("Log message in the DeleteOwner method");
             var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
             if (owner == null)
             {
@@ -81,6 +88,7 @@ namespace aspnetcore_crud.Controllers
         [HttpPut("owner/{id}")]
         public async Task<IActionResult> UpdateOwner(int id, [FromBody] Owner owner)
         {
+            _logger.LogInformation("Log message in the UpdateOwner method");
             if (owner == null)
             {
                 return BadRequest("Owner object is null");
