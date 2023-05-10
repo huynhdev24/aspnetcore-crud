@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetcore_crud.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class OwnerController : ControllerBase
     {
@@ -18,14 +18,14 @@ namespace aspnetcore_crud.Controllers
             this.unitofWork = unitofWork;
         }
 
-        [HttpGet(Name = "GetOwners")]
+        [HttpGet("owner")]
         public async Task<IActionResult> GetOwners()
         {
             var owners = await this.unitofWork.Ownerrepo.GetEntities();
             return Ok(owners);
         }
 
-        [HttpGet("{id}", Name = "GetOwner")]
+        [HttpGet("owner/{id}")]
         public async Task<IActionResult> GetOwner(int id)
         {
             var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
@@ -50,7 +50,7 @@ namespace aspnetcore_crud.Controllers
             }
         }
 
-        [HttpPost(Name = "CreateOwner")]
+        [HttpPost("owner")]
         public Task<IActionResult> CreateOwner([FromBody] Owner owner)
         {
             if(owner == null)
@@ -66,7 +66,7 @@ namespace aspnetcore_crud.Controllers
             return Task.FromResult<IActionResult>(CreatedAtRoute("GetOwner", new { id = owner.Id }, owner));
         }
 
-        [HttpDelete("{id}", Name = "DeleteOwner")]
+        [HttpDelete("owner/{id}")]
         public async Task<IActionResult> DeleteOwner(int id)
         {
             var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
@@ -78,7 +78,7 @@ namespace aspnetcore_crud.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}", Name = "UpdateOwner")]
+        [HttpPut("owner/{id}")]
         public async Task<IActionResult> UpdateOwner(int id, [FromBody] Owner owner)
         {
             if (owner == null)
