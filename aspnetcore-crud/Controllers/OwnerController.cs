@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetcore_crud.Controllers
 {
-    [Route("api/")]
+    [Route("api/owner")]
     [ApiController]
     public class OwnerController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace aspnetcore_crud.Controllers
             _logger = logFactory.CreateLogger<OwnerController>();
         }
 
-        [HttpGet("owner")]
+        [HttpGet]
         public async Task<IActionResult> GetOwners()
         {
             _logger.LogInformation("Log message in the GetOwners method");
@@ -28,7 +28,7 @@ namespace aspnetcore_crud.Controllers
             return Ok(owners);
         }
 
-        [HttpGet("owner/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetOwner(int id)
         {
             _logger.LogInformation("Log message in the GetOwnerById method");
@@ -55,7 +55,7 @@ namespace aspnetcore_crud.Controllers
             }
         }
 
-        [HttpPost("owner")]
+        [HttpPost]
         public Task<IActionResult> CreateOwner([FromBody] Owner owner)
         {
             _logger.LogInformation("Log message in the CreateOwner method");
@@ -72,7 +72,7 @@ namespace aspnetcore_crud.Controllers
             return Task.FromResult<IActionResult>(CreatedAtRoute("GetOwner", new { id = owner.Id }, owner));
         }
 
-        [HttpDelete("owner/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOwner(int id)
         {
             _logger.LogInformation("Log message in the DeleteOwner method");
@@ -85,7 +85,7 @@ namespace aspnetcore_crud.Controllers
             return NoContent();
         }
 
-        [HttpPut("owner/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOwner(int id, [FromBody] Owner owner)
         {
             _logger.LogInformation("Log message in the UpdateOwner method");
