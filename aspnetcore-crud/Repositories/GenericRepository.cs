@@ -28,7 +28,7 @@ namespace aspnetcore_crud.Repositories
                 .Where(predicate).ToList();
         }
 
-        public virtual T Get(Guid id)
+        public virtual T Get(int id)
         {
             return context.Find<T>(id);
         }

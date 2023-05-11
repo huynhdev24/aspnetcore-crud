@@ -21,18 +21,18 @@ namespace aspnetcore_crud.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOwners()
+        public IActionResult GetOwners()
         {
             _logger.LogInformation("Log message in the GetOwners method");
-            var owners = await this.unitofWork.Ownerrepo.GetEntities();
+            var owners = this.unitofWork.OwnerRepository.All().ToList();
             return Ok(owners);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOwner(int id)
+        public IActionResult GetOwnerById(int id)
         {
             _logger.LogInformation("Log message in the GetOwnerById method");
-            var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
+            var owner = this.unitofWork.OwnerRepository.Get(id);
             if(owner == null)
             {
                 return NotFound();
@@ -40,53 +40,40 @@ namespace aspnetcore_crud.Controllers
             return Ok(owner);
         }
 
-        [HttpGet("{id}/account")]
-        public async Task<ActionResult<Owner>> GetOwnerWithDetails(int id)
-        {
-            _logger.LogInformation("Log message in the GetOwnerWithDetailsById method");
-            var owner = await this.unitofWork.Ownerrepo.GetEntityWithDetails(id);
-            if(owner == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(owner);
-            }
-        }
-
         [HttpPost]
-        public Task<IActionResult> CreateOwner([FromBody] Owner owner)
+        public IActionResult CreateOwner([FromBody] Owner owner)
         {
             _logger.LogInformation("Log message in the CreateOwner method");
             if (owner == null)
             {
-                return Task.FromResult<IActionResult>(BadRequest("Owner object is null"));    
+                return BadRequest("Owner object is null");    
             }
             if (!ModelState.IsValid)
             {
-                return Task.FromResult<IActionResult>(BadRequest("Invalid model object"));
+                return BadRequest("Invalid model object");
             }
 
-            this.unitofWork.Ownerrepo.CreateEntity(owner);
-            return Task.FromResult<IActionResult>(CreatedAtRoute("GetOwner", new { id = owner.Id }, owner));
+            this.unitofWork.OwnerRepository.Add(owner);
+            this.unitofWork.SaveChanges();
+            return Ok(owner);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOwner(int id)
+        public IActionResult DeleteOwner(int id, [FromBody] Owner owner)
         {
             _logger.LogInformation("Log message in the DeleteOwner method");
-            var owner = await this.unitofWork.Ownerrepo.GetEntity(id);
-            if (owner == null)
+            var ownerDelete = this.unitofWork.OwnerRepository.Get(id);
+            if (ownerDelete == null)
             {
                 return NotFound();
             }
-            this.unitofWork.Ownerrepo.DeleteEntity(owner);
+            this.unitofWork.OwnerRepository.Delete(owner);
+            this.unitofWork.SaveChanges();
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateOwner(int id, [FromBody] Owner owner)
+        public IActionResult UpdateOwner(int id, [FromBody] Owner owner)
         {
             _logger.LogInformation("Log message in the UpdateOwner method");
             if (owner == null)
@@ -97,12 +84,13 @@ namespace aspnetcore_crud.Controllers
             {
                 return BadRequest("Invalid model object");
             }
-            var ownerEntity = await this.unitofWork.Ownerrepo.GetEntity(id);
+            var ownerEntity = this.unitofWork.OwnerRepository.Get(id);
             if (ownerEntity == null)
             {
                 return NotFound();
             }
-            this.unitofWork.Ownerrepo.UpdateEntity(ownerEntity, owner);
+            this.unitofWork.OwnerRepository.Update(owner);
+            this.unitofWork.SaveChanges();
             return NoContent();
         }
     }

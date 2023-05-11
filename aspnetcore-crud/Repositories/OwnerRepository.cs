@@ -22,7 +22,7 @@ namespace aspnetcore_crud.Repositories
             return base.Find(predicate).ToList();
         }
 
-        public Owner Get(Guid id)
+        public Owner Get(int id)
         {
             return base.Get(id);
         }
@@ -37,9 +37,9 @@ namespace aspnetcore_crud.Repositories
             return base.Update(owner);
         }
 
-        public void Delete(Owner entity)
+        public void Delete(Owner owner)
         {
-            base.Delete(entity);
+            base.Delete(owner);
         }
     }
 }

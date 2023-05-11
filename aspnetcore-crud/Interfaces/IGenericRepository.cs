@@ -13,7 +13,8 @@ namespace aspnetcore_crud.Interfaces
         //void DeleteEntity(T entity);
         T Add(T entity);
         T Update(T entity);
-        T Get(Guid id);
+        T Get(int id);
+        void Delete(T entity);
         IEnumerable<T> All();
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
         void SaveChanges();
