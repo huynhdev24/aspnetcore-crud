@@ -1,46 +1,53 @@
 ﻿using aspnetcore_crud.Data;
 using aspnetcore_crud.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace aspnetcore_crud.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected DataContext _repositoryContext;
-        internal DbSet<T> DbSet { get; set; }
-        public GenericRepository(DataContext _repositoryContext)
+        protected DataContext context;
+
+        public GenericRepository(DataContext context)
         {
-            this._repositoryContext = _repositoryContext;
-            this.DbSet = this._repositoryContext.Set<T>();
-        }
-        public virtual void CreateEntity(T entity)
-        {
-            throw new NotImplementedException();
+            this.context = context;
         }
 
-        public virtual void UpdateEntity(T dbEntity, T entity)
+        public virtual T Add(T entity)
         {
-            throw new NotImplementedException();
+            return context
+                .Add(entity)
+                .Entity;
         }
 
-        public virtual void DeleteEntity(T entity)
+        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return context.Set<T>()
+                .AsQueryable()
+                .Where(predicate).ToList();
         }
 
-        public virtual Task<IEnumerable<T>> GetEntities()
+        public virtual T Get(Guid id)
         {
-            throw new NotImplementedException();
+            return context.Find<T>(id);
         }
 
-        public virtual Task<T> GetEntity(int id)
+        public virtual IEnumerable<T> All()
         {
-            throw new NotImplementedException();
+            return context.Set<T>()
+                .ToList();
         }
 
-        public virtual Task<T?> GetEntityWithDetails(int id)
+        public virtual T Update(T entity)
         {
-            throw new NotImplementedException();
+            return context.Update(entity)
+                .Entity;
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
         }
     }
 }
