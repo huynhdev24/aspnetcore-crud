@@ -1,24 +1,37 @@
 ﻿using aspnetcore_crud.Data;
 using aspnetcore_crud.Interfaces;
+using aspnetcore_crud.Models;
 using aspnetcore_crud.Repositories;
+using Castle.Core.Resource;
 
 namespace aspnetcore_crud.UnitOfWork
 {
     public class UnitofWork: IUnitofWork
     {
-        public IOwnerRepository Ownerrepo { get; private set; }
+        private DataContext context;
+        private IGenericRepository<Owner> ownerRepository;
 
-        private readonly DataContext _repositoryContext;
-
-        public UnitofWork(DataContext _repositoryContext)
+        public UnitofWork(DataContext context)
         {
-            this._repositoryContext = _repositoryContext;
-            Ownerrepo = new OwnerRepository(_repositoryContext);
+            this.context = context;
         }
 
-        public async Task CompleteAsync()
+        public IGenericRepository<Owner> OwnerRepository
         {
-            await this._repositoryContext.SaveChangesAsync();
+            get
+            {
+                if (ownerRepository == null)
+                {
+                    ownerRepository = new OwnerRepository(context);
+                }
+
+                return ownerRepository;
+            }
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
         }
     }
 }
