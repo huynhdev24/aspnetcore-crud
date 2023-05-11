@@ -45,6 +45,11 @@ namespace aspnetcore_crud.Repositories
                 .Entity;
         }
 
+        public virtual void Delete(T entity)
+        {
+            context.Remove(entity);
+        }
+
         public void SaveChanges()
         {
             context.SaveChanges();

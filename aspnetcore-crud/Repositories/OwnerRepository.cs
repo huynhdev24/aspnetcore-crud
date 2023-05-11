@@ -2,77 +2,44 @@
 using aspnetcore_crud.Interfaces;
 using aspnetcore_crud.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace aspnetcore_crud.Repositories
 {
-    public class OwnerRepository: GenericRepository<Owner>, IOwnerRepository, IDisposable
+    public class OwnerRepository: GenericRepository<Owner>
     {
-        #region Implement IOwnerRepository
-        private new readonly DataContext _repositoryContext;
-
-        public OwnerRepository(DataContext _repositoryContext): base(_repositoryContext)
+        public OwnerRepository(DataContext context) : base(context)
         {
-            this._repositoryContext = _repositoryContext;
         }
 
-        public async Task<Owner?> GetEntity(int ownerId)
+        public Owner Add(Owner owner)
         {
-            return await _repositoryContext.Owners.FindAsync(ownerId);
+            return base.Add(owner);
         }
 
-        public async Task<IEnumerable<Owner>> GetEntities()
+        public List<Owner> Find(Expression<Func<Owner, bool>> predicate)
         {
-            return await _repositoryContext.Owners.ToListAsync();
-        }
-        
-        public async Task<Owner?> GetEntityWithDetails(int ownerId)
-        {
-            return await _repositoryContext.Owners
-                .Include(owner => owner.Accounts)
-                .FirstOrDefaultAsync(owner => owner.Id == ownerId);
+            return base.Find(predicate).ToList();
         }
 
-        public void CreateEntity(Owner owner)
+        public Owner Get(Guid id)
         {
-            _repositoryContext.Owners.Add(owner);
-            _repositoryContext.SaveChangesAsync();
+            return base.Get(id);
         }
 
-        public void UpdateEntity(Owner dbOwner, Owner owner)
+        public List<Owner> All()
         {
-            dbOwner.Name = owner.Name;
-            dbOwner.Address = owner.Address;
-            dbOwner.DateOfBirth = owner.DateOfBirth;
-
-            _repositoryContext.Owners.Update(dbOwner);
-            _repositoryContext.SaveChangesAsync();
+            return base.All().ToList();
         }
 
-        public void DeleteEntity(Owner owner)
+        public Owner Update(Owner owner)
         {
-            _repositoryContext.Owners.Remove(owner);
-            _repositoryContext.SaveChangesAsync();
+            return base.Update(owner);
         }
 
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
+        public void Delete(Owner entity)
         {
-            if (!this.disposed)
-            {
-                if(disposing)
-                {
-                    _repositoryContext.Dispose();
-                }
-            }
-            this.disposed = true;
+            base.Delete(entity);
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }
